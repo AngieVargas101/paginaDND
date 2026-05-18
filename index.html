@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sitio Web Estadístico</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #F527B4;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #dbe2ea;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .logo h1 {
+      font-size: 32px;
+      color: #0f172a;
+    }
+    .logo p {
+      color: #64748b;
+      font-size: 15px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #1e3a8a;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+    nav a:hover { color: #2563eb; }
+
+    .banner {
+      margin: 30px 0;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      height: 380px;
+      background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    }
+    .banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+    }
+    .banner-content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      padding: 70px 50px;
+      max-width: 700px;
+    }
+    .tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+    .banner h2 {
+      font-size: 48px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .banner p {
+      font-size: 18px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin: 40px 0 60px;
+      align-items: center;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .card h3 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      color: #0f172a;
+    }
+    .video-box iframe {
+      width: 100%;
+      height: 340px;
+      border: none;
+      border-radius: 14px;
+    }
+
+    section { padding: 20px 0 60px; }
+    .section-title {
+      font-size: 36px;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+    .section-text {
+      color: #475569;
+      margin-bottom: 25px;
+    }
+
+    .students {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+    .student-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .student-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+    }
+    .student-card .info {
+      padding: 16px;
+    }
+    .student-card h4 {
+      font-size: 21px;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .student-card p { color: #64748b; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-top: 25px;
+    }
+    .stat-box {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .stat-box small {
+      color: #2563eb;
+      font-weight: bold;
+    }
+    .stat-box h3 {
+      margin: 10px 0;
+      color: #0f172a;
+      font-size: 24px;
+    }
+    .stat-value {
+      font-size: 42px;
+      font-weight: bold;
+      color: #111827;
+      margin: 12px 0;
+    }
+
+    .progress-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 28px;
+    }
+    .progress-card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .bar {
+      width: 100%;
+      height: 14px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar span {
+      display: block;
+      height: 100%;
+      background: #2563eb;
+      border-radius: 999px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+    .dark-card {
+      background: #0f172a;
+      color: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+    .dark-card h3 {
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+    .dark-card ul { padding-left: 20px; }
+    .dark-card li { margin-bottom: 10px; }
+
+    footer {
+      background: #020617;
+      color: white;
+      margin-top: 30px;
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 28px 0;
+      flex-wrap: wrap;
+    }
+    footer p { color: #cbd5e1; }
+
+    @media (max-width: 992px) {
+      .split, .students, .stats-grid, .progress-list, .about-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .banner h2 { font-size: 36px; }
+    }
+    @media (max-width: 768px) {
+      .split, .students, .stats-grid, .progress-list, .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .banner {
+        height: auto;
+      }
+      .banner-content {
+        padding: 50px 25px;
+      }
+      .banner h2 {
+        font-size: 30px;
+      }
+      nav a {
+        margin-left: 12px;
+      }
+      .video-box iframe {
+        height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="logo">
+        <h1>Empresa de Analisis de datos</h1>
+        <p>Somos una empresa lider en Estadistica</p>
+      </div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#estadistica">Estadística</a>
+        <a href="#acerca">Acerca de</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="home">
+      <div class="banner">
+        <div class="banner-content">
+          <span class="tag">Plataforma educativa y estadística</span>
+          <h2>Bienvenidos al portal de análisis y visualización de información</h2>
+          <p>Un espacio digital donde la tecnología, la educación y la estadística se integran para mostrar información relevante de forma clara y moderna.</p>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <h3>Nuestra Propuesta</h3>
+          <p>El dashboard presentar informacion relevante de empleados que tiene la empresa " Sistema techonology"</p>
+          <br>
+          <p>Además, se incorporan tablas y graficos para toma de decisiones</p>
+        </div>
+        <div class="card video-box">
+          <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" title="Video de presentación" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <h2 class="section-title">Estudiantes que desarrollan el sitio</h2>
+      <p class="section-text">Equipo de trabajo que aporta diseño, contenido, análisis y recursos multimedia.</p>
+      <div class="students">
+        <div class="student-card">
+          <img src="c.jpg" alt="Ana Torres">
+          <div class="info">
+            <h4>Ana Torres</h4>
+            <p>Diseño web</p>
+          </div>
+        </div>
+        <div class="student-card">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80" alt="Carlos Pérez">
+          <div class="info">
+            <h4>Carlos Pérez</h4>
+            <p>Estadística</p>
+          </div>
+        </div>
+        <div class="student-card">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=800&q=80" alt="María López">
+          <div class="info">
+            <h4>María López</h4>
+            <p>Contenido</p>
+          </div>
+        </div>
+        <div class="student-card">
+          <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" alt="Luis Andrade">
+          <div class="info">
+            <h4>Luis Andrade</h4>
+            <p>Multimedia</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="estadistica">
+      <h2 class="section-title">Estadística de varios sitios</h2>
+      <p class="section-text">En esta sección se presentan indicadores visuales de diferentes lugares y contextos relacionados con turismo, educación y espacios de interés.</p>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <small>Indicador</small>
+          <h3>Turismo en Riobamba</h3>
+          <div class="stat-value">78%</div>
+          <p>Crecimiento estimado de visitas a lugares turísticos de la ciudad.</p>
+        </div>
+        <div class="stat-box">
+          <small>Indicador</small>
+          <h3>Uso de tecnología</h3>
+          <div class="stat-value">92%</div>
+          <p>Estudiantes que usan herramientas digitales en proyectos académicos.</p>
+        </div>
+        <div class="stat-box">
+          <small>Indicador</small>
+          <h3>Proyectos colaborativos</h3>
+          <div class="stat-value">65%</div>
+          <p>Trabajos realizados en equipo en entornos educativos.</p>
+        </div>
+        <div class="stat-box">
+          <small>Indicador</small>
+          <h3>Aprendizaje visual</h3>
+          <div class="stat-value">88%</div>
+          <p>Preferencia por recursos gráficos, dashboards y videos educativos.</p>
+        </div>
+      </div>
+
+      <div class="progress-list">
+        <div class="progress-card">
+          <div class="progress-head">
+            <div>
+              <h3>Parque Maldonado</h3>
+              <p>Uno de los lugares más visitados del centro de Riobamba.</p>
+            </div>
+            <span class="badge">85%</span>
+          </div>
+          <div class="bar"><span style="width: 85%;"></span></div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-head">
+            <div>
+              <h3>Chimborazo</h3>
+              <p>Destino emblemático para turismo natural y científico.</p>
+            </div>
+            <span class="badge">95%</span>
+          </div>
+          <div class="bar"><span style="width: 95%;"></span></div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-head">
+            <div>
+              <h3>Museos locales</h3>
+              <p>Espacios culturales con creciente interés académico.</p>
+            </div>
+            <span class="badge">63%</span>
+          </div>
+          <div class="bar"><span style="width: 63%;"></span></div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-head">
+            <div>
+              <h3>Centros educativos</h3>
+              <p>Sitios de formación e innovación tecnológica.</p>
+            </div>
+            <span class="badge">74%</span>
+          </div>
+          <div class="bar"><span style="width: 74%;"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="acerca">
+      <div class="about-grid">
+        <div class="card">
+          <h2 class="section-title">Acerca de</h2>
+          <p>Este proyecto web tiene como finalidad mostrar una estructura moderna de sitio informativo con navegación sencilla, integración de contenido visual y una sección de estadísticas representada de forma amigable. Puede ser utilizado como base para proyectos universitarios, institucionales o demostrativos.</p>
+          <br>
+          <p>La página está organizada para facilitar la lectura, mejorar la experiencia de usuario y presentar contenidos relevantes relacionados con educación, análisis de información y promoción de espacios locales.</p>
+        </div>
+        <div class="dark-card">
+          <h3>Objetivos del sitio</h3>
+          <ul>
+            <li>Presentar información con una interfaz atractiva y profesional.</li>
+            <li>Integrar recursos como imágenes, video y estadísticas visuales.</li>
+            <li>Difundir el trabajo de estudiantes en el desarrollo web.</li>
+            <li>Promover el interés por Riobamba como ciudad académica y turística.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div>
+        <h3>Visitar Riobamba</h3>
+        <p>Ciudad de historia, cultura, educación y paisajes andinos incomparables.</p>
+      </div>
+      <div>
+        <p>© 2026 Sitio Web Estadístico. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
